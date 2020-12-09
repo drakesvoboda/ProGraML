@@ -89,13 +89,15 @@ class DataflowGgnnBatchBuilder(BaseBatchBuilder):
                 .feature[n]
                 .int64_list.value[0]
                 for n in node_list
-            ]
+            ] if features is not None else [0] * len(graph.node)
+
             node_labels = [
                 features.node_features.feature_list["data_flow_value"]
                 .feature[n]
                 .int64_list.value[0]
                 for n in node_list
-            ]
+            ] if features is not None else [0] * len(graph.node)
+
         except IndexError:
             logging.debug("Encoding error")
             return
